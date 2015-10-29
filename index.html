@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="tt" ng-controller="MainCtrl">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" type="text/css" href="css/ttt.css">
+    <link rel="stylesheet" type="text/css" href="js/vendor/angular-csp.css">
+    <script type="text/javascript" src="js/app/tttfield.js"></script>
+    <script type="text/javascript" src="js/app/tttline.js"></script>
+    <script type="text/javascript" src="js/app/tttgame.js"></script>
+
+    <script type="text/javascript" src="js/vendor/angular.min.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-route.min.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-animate.min.js"></script>
+    <script type="text/javascript" src="js/app/app.js"></script>
+    <script type="text/javascript" src="js/services/game.js"></script>
+    <script type="text/javascript" src="js/controllers/headCtrl.js"></script>
+    <script type="text/javascript" src="js/controllers/mainCtrl.js"></script>
+    <script type="text/javascript" src="js/directives/gameField.js"></script>
+</head>
+<body>
+<div class="ttt-container">
+    <div class="field-head" ng-controller="HeadCtrl">
+        <div id="fh-progress" ng-show="game.getState() == 'progress'">
+            Game time:
+            <div class="ttt-timer" id="fh-timer">{{timePassedStart | date : 'mm:ss'}}</div>
+            Your side:
+            <div class="ttt-state-informer" id="fh-state-informer">X</div>
+            <button id="abort-button" ng-click="goStart()">ABORT</button>
+        </div>
+        <div id="fh-finish" ng-show="game.getState() == 'finished'">
+            <div class="ttt-result-banner" ng-show="game.getWinner() == game.getComputerKind()">YOU LOSE</div>
+            <div class="ttt-result-banner" ng-show="game.getWinner() == game.getHumanKind()">YOU WON!</div>
+            <div class="ttt-result-banner" ng-show="game.getWinner() == -1">DRAW</div>
+            <div class="ttt-restart-panel">
+                <button id="restart-button" ng-click="goStart()">RESTART</button>
+            </div>
+        </div>
+        <div id="fh-start" ng-show="game.getState() == 'wait_new_game'">
+            <div class="ttt-choose-side-panel">
+                Choose the side:&nbsp;<button id="zero-button" ng-click="goProgress(0)"> 0 </button>&nbsp;<button id="ex-button" ng-click="goProgress(1)"> X </button>
+            </div>
+        </div>
+    </div>
+    <div class="game-field">
+        <ad-game-field width="420" height="420" game="game" on-click-place="fieldClickHandler(place)"></ad-game-field>
+    </div>
+</div>
+</body>
+</html>
